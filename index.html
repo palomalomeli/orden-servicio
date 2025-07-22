@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orden de Servicio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="title">Orden de Servicio</div>
+    <form id="ordenForm">
+  <div class="user-details">
+    <!-- Columna 1: Cliente -->
+    <div class="form-column">
+      <h3>Datos del Cliente</h3>
+      <div class="input-box">
+        <span class="details">Cliente</span>
+        <input type="text" id="cliente" required>
+      </div>
+      <div class="input-box">
+        <span class="details">Teléfono</span>
+        <input type="text" id="telefono" required>
+      </div>
+    </div>
+
+    <!-- Columna 2: Vehículo -->
+    <div class="form-column">
+      <h3>Datos del Vehículo</h3>
+      <div class="input-box">
+        <span class="details">Vehículo</span>
+        <input type="text" id="vehiculo" required>
+      </div>
+      <div class="input-box">
+        <span class="details">Color</span>
+        <input type="text" id="color" required>
+      </div>
+      <div class="input-box">
+        <span class="details">Kilometraje</span>
+        <input type="text" id="kilometraje" required>
+      </div>
+      <div class="input-box">
+        <span class="details">No. Serie</span>
+        <input type="text" id="noserie" required>
+      </div>
+      <div class="input-box">
+        <span class="details">Tipo de motor</span>
+        <input type="text" id="tipomotor" required>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zona general -->
+  <div class="form-section">
+    <h3>Información de Servicio</h3>
+
+    <div class="input-box">
+      <span class="details">Motivo</span>
+      <textarea id="motivo" required></textarea>
+    </div>
+
+    <div class="input-box">
+      <span class="details">Servicios realizados</span>
+      <textarea id="serviciosRealizados" required></textarea>
+    </div>
+
+    <div class="checkbox-section">
+      <span class="details">Otros servicios solicitados:</span>
+      <label><input type="checkbox" name="otros" value="Revisión de frenos"> Revisión de frenos</label>
+      <label><input type="checkbox" name="otros" value="Cambio de llantas"> Cambio de llantas</label>
+      <label><input type="checkbox" name="otros" value="Cambio de aceite"> Cambio de aceite</label>
+      <label><input type="checkbox" name="otros" value="Lavado"> Lavado</label>
+    </div>
+
+    <div class="input-box">
+      <span class="details">Observaciones</span>
+      <textarea id="observaciones"></textarea>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="button">
+    <input type="button" value="Registrar en Google Sheets" onclick="registrarDatos()">
+  </div>
+  <div class="button">
+    <input type="button" value="Generar PDF" onclick="generarPDF()">
+  </div>
+  <!-- En tu HTML -->
+<img id="imagenCarro" src="carro.jpeg" style="display:none;">
+
+</form>
+
+
+
+  </div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  const { jsPDF } = window.jspdf;
+</script>
+<script src="script.js" defer></script>
+
+</body>
+</html>
