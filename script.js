@@ -1,5 +1,5 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxW-6qN6AtmK-mTASNLPvJp-D-CxfVIZ3NddZuMeOHfthM4DheSygcz8jsrAvn8wFQ6Xw/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyi-5gZv7wN1p7ChyUhhzKfN6gQAE2AmrotoTtqhp6e5cIseZ8kEhWhfaNptgK-SDs2yQ/exec';
 
 // Función para obtener los checkbox "otros" seleccionados
 function getCheckedOthers() {
@@ -22,14 +22,17 @@ function registrarDatos() {
     observaciones: document.getElementById("observaciones").value
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbxW-6qN6AtmK-mTASNLPvJp-D-CxfVIZ3NddZuMeOHfthM4DheSygcz8jsrAvn8wFQ6Xw/exec", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
+const formData = new URLSearchParams(data);
+
+fetch(scriptURL, {
+  method: "POST",
+  mode: "cors",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: formData.toString()
+})
+
     .then(res => res.text())
     .then(response => {
       alert("Datos enviados correctamente: " + response);
