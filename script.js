@@ -1,5 +1,5 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const url = 'https://script.google.com/macros/s/TU_URL_DE_APPS_SCRIPT/exec';
+const url = 'https://script.google.com/macros/s/https://script.google.com/macros/library/d/10ChYfEwLcTeiRRDB3MtV8f0LI05x-pmLnudy-84fzKncKSq61b8qzJkF/1/exec';
 
 // Función para registrar datos en Google Sheets
 function registrarDatos() {
