@@ -1,5 +1,5 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbznC7iYYkNFBlyE36h7gyCGKLR99mdufUT-alLRmAqtVwxSSFNGuNf8JDeFwkur_69SuQ/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzBZRas2Glwkv6z4QDeYHC3thjH6FhaTVYz0PlqPU7rCojU10LprQIE2UXD_8uEtuykVQ/exec';
 
 // Función para obtener los checkbox "otros" seleccionados
 function getCheckedOthers() {
@@ -19,7 +19,7 @@ function registrarDatos() {
     document.getElementById("noSerie").value
     document.getElementById("tipoMotor").value
     document.getElementById("motivo").value
-    document.getElementById("servicios").value
+    document.getElementById("serviciosRealizados").value
     document.getElementById("observaciones").value
 
 
