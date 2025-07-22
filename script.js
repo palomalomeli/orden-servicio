@@ -7,30 +7,37 @@ function getCheckedOthers() {
     .map(cb => cb.value);
 }
 
-// Función para registrar datos en Google Sheets via GET (para evitar CORS)
 function registrarDatos() {
-  try {
-    const url = new URL(scriptURL);
-    document.getElementById("cliente").value
-    document.getElementById("telefono").value
-    document.getElementById("vehiculo").value
-    document.getElementById("color").value
-    document.getElementById("kilometraje").value
-    document.getElementById("noSerie").value
-    document.getElementById("tipoMotor").value
-    document.getElementById("motivo").value
-    document.getElementById("serviciosRealizados").value
-    document.getElementById("observaciones").value
+  const data = {
+    cliente: document.getElementById("cliente").value,
+    telefono: document.getElementById("telefono").value,
+    vehiculo: document.getElementById("vehiculo").value,
+    color: document.getElementById("color").value,
+    kilometraje: document.getElementById("kilometraje").value,
+    noSerie: document.getElementById("noSerie").value,
+    tipoMotor: document.getElementById("tipoMotor").value,
+    motivo: document.getElementById("motivo").value,
+    serviciosRealizados: document.getElementById("serviciosRealizados").value,
+    otros: getCheckedOthers().join(", "),
+    observaciones: document.getElementById("observaciones").value
+  };
 
-
-    fetch(url.toString())
-      .then(response => response.text())
-      .then(text => alert("Datos enviados correctamente: " + text))
-      .catch(error => alert("Error al enviar datos: " + error));
-  } catch (error) {
-    console.error("Error al capturar datos:", error);
-    alert("Hubo un problema al leer el formulario.");
-  }
+  fetch("https://script.google.com/macros/s/AKfycbxW-6qN6AtmK-mTASNLPvJp-D-CxfVIZ3NddZuMeOHfthM4DheSygcz8jsrAvn8wFQ6Xw/exec", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(res => res.text())
+    .then(response => {
+      alert("Datos enviados correctamente: " + response);
+    })
+    .catch(error => {
+      console.error("Error al enviar datos:", error);
+      alert("Error al enviar los datos.");
+    });
 }
 
 // Función para generar PDF con diseño y imagen
