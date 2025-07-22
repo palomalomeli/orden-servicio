@@ -1,154 +1,115 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const url = 'https://script.google.com/macros/s/https://script.google.com/macros/library/d/10ChYfEwLcTeiRRDB3MtV8f0LI05x-pmLnudy-84fzKncKSq61b8qzJkF/1/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbznC7iYYkNFBlyE36h7gyCGKLR99mdufUT-alLRmAqtVwxSSFNGuNf8JDeFwkur_69SuQ/exec';
 
-// Función para registrar datos en Google Sheets
+// Función para obtener los checkbox "otros" seleccionados
+function getCheckedOthers() {
+  return Array.from(document.querySelectorAll('input[name="otros"]:checked'))
+    .map(cb => cb.value);
+}
+
+// Función para registrar datos en Google Sheets via GET (para evitar CORS)
 function registrarDatos() {
   try {
-    const cliente = document.getElementById("cliente").value;
-    const telefono = document.getElementById("telefono").value;
-    const vehiculo = document.getElementById("vehiculo").value;
-    const color = document.getElementById("color").value;
-    const kilometraje = document.getElementById("kilometraje").value;
-    const noserie = document.getElementById("noserie").value;
-    const tipomotor = document.getElementById("tipomotor").value;
-    const motivo = document.getElementById("motivo").value;
-    const serviciosRealizados = document.getElementById("serviciosRealizados").value;
-    const observaciones = document.getElementById("observaciones").value;
+    const url = new URL(scriptURL);
+    document.getElementById("cliente").value
+    document.getElementById("telefono").value
+    document.getElementById("vehiculo").value
+    document.getElementById("color").value
+    document.getElementById("kilometraje").value
+    document.getElementById("noSerie").value
+    document.getElementById("tipoMotor").value
+    document.getElementById("motivo").value
+    document.getElementById("servicios").value
+    document.getElementById("observaciones").value
 
-    // Capturar los checkboxes seleccionados
-    const otros = Array.from(document.querySelectorAll('input[name="otros"]:checked'))
-      .map(cb => cb.value)
-      .join(", ");
 
-    const datos = {
-      cliente,
-      telefono,
-      vehiculo,
-      color,
-      kilometraje,
-      noserie,
-      tipomotor,
-      motivo,
-      serviciosRealizados,
-      otros,
-      observaciones
-    };
-
-    // Enviar los datos a Google Sheets
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(datos),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => res.text())
-    .then(response => {
-      alert("Datos enviados correctamente.");
-    })
-    .catch(error => {
-      console.error("Error al enviar datos:", error);
-      alert("Error al enviar los datos.");
-    });
+    fetch(url.toString())
+      .then(response => response.text())
+      .then(text => alert("Datos enviados correctamente: " + text))
+      .catch(error => alert("Error al enviar datos: " + error));
   } catch (error) {
     console.error("Error al capturar datos:", error);
     alert("Hubo un problema al leer el formulario.");
   }
 }
 
-// Función para generar PDF
+// Función para generar PDF con diseño y imagen
 function generarPDF() {
   const cliente = document.getElementById("cliente").value;
   const telefono = document.getElementById("telefono").value;
   const vehiculo = document.getElementById("vehiculo").value;
   const color = document.getElementById("color").value;
   const kilometraje = document.getElementById("kilometraje").value;
-  const noserie = document.getElementById("noserie").value;
-  const tipomotor = document.getElementById("tipomotor").value;
+  const noSerie = document.getElementById("noSerie").value;
+  const tipoMotor = document.getElementById("tipoMotor").value;
   const motivo = document.getElementById("motivo").value;
   const serviciosRealizados = document.getElementById("serviciosRealizados").value;
   const observaciones = document.getElementById("observaciones").value;
-  const otros = Array.from(document.querySelectorAll('input[name="otros"]:checked'))
-    .map(cb => cb.value)
-    .join(", ");
+  const otros = getCheckedOthers().join(", ");
 
   const doc = new jsPDF();
 
+  // Título y encabezado
   doc.setFontSize(18);
   doc.text("Orden de Servicio", 105, 15, null, null, "center");
-
   doc.setFontSize(14);
   doc.text("Taller Mecánico XYZ", 105, 25, null, null, "center");
   doc.text("Tel: 555-123-4567", 105, 32, null, null, "center");
 
-  // Datos del cliente y vehículo
+  // Dividir en dos columnas
   doc.setFontSize(12);
   doc.text("Datos del Cliente:", 10, 45);
   doc.text(`Nombre: ${cliente}`, 10, 52);
   doc.text(`Teléfono: ${telefono}`, 10, 59);
+
   doc.text("Datos del Vehículo:", 110, 45);
   doc.text(`Vehículo: ${vehiculo}`, 110, 52);
   doc.text(`Color: ${color}`, 110, 59);
   doc.text(`Kilometraje: ${kilometraje}`, 110, 66);
-  doc.text(`No. Serie: ${noserie}`, 110, 73);
-  doc.text(`Tipo de Motor: ${tipomotor}`, 110, 80);
+  doc.text(`No. Serie: ${noSerie}`, 110, 73);
+  doc.text(`Tipo de Motor: ${tipoMotor}`, 110, 80);
 
-  // Motivo y servicios
-  doc.setFontSize(12);
-  doc.text("Motivo:", 10, 90);
-  doc.text(doc.splitTextToSize(motivo, 190), 10, 97);
-  
-  doc.text("Servicios Realizados:", 10, doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 115);
-  doc.text(doc.splitTextToSize(serviciosRealizados, 190), 10, 115);
+  // Motivo y servicios realizados
+  let y = 95;
+  doc.text("Motivo:", 10, y);
+  y += 7;
+  const motivoText = doc.splitTextToSize(motivo, 190);
+  doc.text(motivoText, 10, y);
+  y += motivoText.length * 7;
 
-  doc.text("Otros servicios:", 10, 130);
-  doc.text(doc.splitTextToSize(otros, 190), 10, 137);
+  doc.text("Servicios Realizados:", 10, y);
+  y += 7;
+  const serviciosText = doc.splitTextToSize(serviciosRealizados, 190);
+  doc.text(serviciosText, 10, y);
+  y += serviciosText.length * 7;
 
-  doc.text("Observaciones:", 10, 150);
-  doc.text(doc.splitTextToSize(observaciones, 190), 10, 157);
+  doc.text("Otros servicios:", 10, y);
+  y += 7;
+  const otrosText = doc.splitTextToSize(otros, 190);
+  doc.text(otrosText, 10, y);
+  y += otrosText.length * 7;
 
-  // En tu script.js
-function generarPDF() {
-  // Obtener el elemento imagen
+  doc.text("Observaciones:", 10, y);
+  y += 7;
+  const observacionesText = doc.splitTextToSize(observaciones, 190);
+  doc.text(observacionesText, 10, y);
+  y += observacionesText.length * 7;
+
+  // Agregar imagen (carro.jpg debe estar en tu HTML con id="imagenCarro")
   const imgElement = document.getElementById("imagenCarro");
-
-  // Crear canvas para convertir la imagen a base64
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-
-  // Ajusta el canvas al tamaño de la imagen
-  canvas.width = imgElement.width;
-  canvas.height = imgElement.height;
-
-  // Cuando la imagen esté cargada
-  imgElement.onload = () => {
-    // Dibujar imagen en canvas
+  if (imgElement && imgElement.complete) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = imgElement.width;
+    canvas.height = imgElement.height;
     ctx.drawImage(imgElement, 0, 0);
-
-    // Obtener base64 de la imagen
     const base64Img = canvas.toDataURL("image/jpeg");
-
-    const doc = new jsPDF();
-
-    // Agrega el texto, etc.
-
-    // Agregar imagen base64 al pdf
-    doc.addImage(base64Img, "JPEG", 10, 180, 60, 40);
-
-    // Guardar PDF
-    doc.save("orden_servicio.pdf");
-  };
-
-  // Si la imagen ya estaba cargada, dispara onload manualmente
-  if (imgElement.complete) {
-    imgElement.onload();
+    doc.addImage(base64Img, "JPEG", 10, y + 10, 60, 40);
   }
+
+  // Firmas
+  doc.text("Firma del Cliente: ______________________", 10, 270);
+  doc.text("Firma del Técnico: ______________________", 110, 270);
+
+  doc.save("orden_servicio.pdf");
 }
-
-
-    // Firma
-    doc.text("Firma del Cliente: ______________________", 10, 230);
-    doc.text("Firma del Técnico: ______________________", 110, 230);
-
-    doc.save("orden_servicio.pdf");
-  };
