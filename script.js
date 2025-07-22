@@ -25,22 +25,17 @@ function registrarDatos() {
 const formData = new URLSearchParams(data);
 
 fetch(scriptURL, {
-  method: "POST",
-  mode: "cors",
+  method: 'POST',
+  mode: 'cors',
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
+    'Content-Type': 'application/json',
   },
-  body: formData.toString()
+  body: JSON.stringify(data)
 })
+.then(res => res.json())
+.then(response => alert('Datos enviados correctamente.'))
+.catch(error => alert('Error al enviar datos: ' + error));
 
-    .then(res => res.text())
-    .then(response => {
-      alert("Datos enviados correctamente: " + response);
-    })
-    .catch(error => {
-      console.error("Error al enviar datos:", error);
-      alert("Error al enviar los datos.");
-    });
 }
 
 // Función para generar PDF con diseño y imagen
