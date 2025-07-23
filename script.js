@@ -1,5 +1,5 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyCFY6hJWZcnW9RnuFdBLhZcY93WJMTIJytxQRT_JXgSYdy9tld1lEC2ugtAhHbfLQ7DA/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbx0IARzX3OhfreuUkgFqM3UyPZICsIyrckstnVshnpnRSVAZLYMOrzsWOfEs3o1oU1B/exec';
 
 // Función para obtener los checkbox "otros" seleccionados
 function getCheckedOthers() {
