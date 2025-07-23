@@ -22,23 +22,28 @@ function registrarDatos() {
     observaciones: document.getElementById("observaciones").value
   };
 
+  // Convierte objeto data a query string URL encoded
+  const formBody = Object.keys(data).map(key => 
+    encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+  ).join("&");
+
   fetch(scriptURL, {
     method: "POST",
+    mode: "cors",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
     },
-    body: new URLSearchParams(data)
+    body: formBody
   })
-    .then(res => res.json())
-    .then(response => {
-      alert("Datos enviados correctamente: " + response.result);
-    })
-    .catch(error => {
-      console.error("Error al enviar datos:", error);
-      alert("Error al enviar los datos.");
-    });
+  .then(res => res.json())
+  .then(response => {
+    alert("Datos enviados correctamente: " + response.result);
+  })
+  .catch(error => {
+    console.error("Error al enviar datos:", error);
+    alert("Error al enviar los datos.");
+  });
 }
-
 
 // Función para generar PDF con diseño y imagen
 function generarPDF() {
