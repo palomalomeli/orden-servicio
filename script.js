@@ -1,5 +1,5 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzm5ERfmgSPENHqiyFz8-tpdaEPd0wf_N8Y9C1Y-t9OeIM75zv6gbtfSoozwzwLmBP27w/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxNZVuirc7TGDyZWpqp1V5oMi653YzF6ElZt8og_vU08NQts0Ski2F7wb22nK2GbGT6zQ/exec';
 
 // Función para obtener los checkbox "otros" seleccionados
 function getCheckedOthers() {
@@ -22,21 +22,24 @@ function registrarDatos() {
     observaciones: document.getElementById("observaciones").value
   };
 
-const formData = new URLSearchParams(data);
-
-fetch(scriptURL, {
-  method: 'POST',
-  mode: 'cors',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data)
-})
-.then(res => res.json())
-.then(response => alert('Datos enviados correctamente.'))
-.catch(error => alert('Error al enviar datos: ' + error));
-
+  fetch(scriptURL, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(res => res.json())
+    .then(response => {
+      alert("Datos enviados correctamente: " + response.result);
+    })
+    .catch(error => {
+      console.error("Error al enviar datos:", error);
+      alert("Error al enviar los datos.");
+    });
 }
+
 
 // Función para generar PDF con diseño y imagen
 function generarPDF() {
