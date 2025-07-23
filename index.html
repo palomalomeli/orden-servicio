@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <div class="title">Orden de Servicio</div>
-    <form id="ordenForm">
+    <form id="ordenForm" action="https://script.google.com/macros/s/AKfycby9PBFmUJNziYtFgX4DPmcie6xbOxOolxV0qhZAazKBGNdqrJXlTieItlVvO99MeYPsVg/exec" method="POST">
   <div class="user-details">
     <!-- Columna 1: Cliente -->
     <div class="form-column">
@@ -80,8 +80,7 @@
 
   <!-- Botones -->
   <div class="button">
-    <input type="button" value="Registrar en Google Sheets" onclick="registrarDatos()">
-  </div>
+    <input type="submit" value="Registrar en Google Sheets">
   <div class="button">
     <input type="button" value="Generar PDF" onclick="generarPDF()">
   </div>
