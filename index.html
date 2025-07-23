@@ -9,96 +9,91 @@
 <body>
   <div class="container">
     <div class="title">Orden de Servicio</div>
-    <form id="ordenForm" action="https://script.google.com/macros/s/AKfycbx0IARzX3OhfreuUkgFqM3UyPZICsIyrckstnVshnpnRSVAZLYMOrzsWOfEs3o1oU1B/exec" method="POST">
-  <div class="user-details">
-    <!-- Columna 1: Cliente -->
-    <div class="form-column">
-      <h3>Datos del Cliente</h3>
-      <div class="input-box">
-        <span class="details">Cliente</span>
-        <input type="text" id="cliente" required>
-      </div>
-      <div class="input-box">
-        <span class="details">Teléfono</span>
-        <input type="text" id="telefono" required>
-      </div>
-    </div>
+    <form id="ordenForm" method="POST">
+      <div class="user-details">
+        <!-- Columna 1: Cliente -->
+        <div class="form-column">
+          <h3>Datos del Cliente</h3>
+          <div class="input-box">
+            <span class="details">Cliente</span>
+            <input type="text" id="cliente" name="cliente" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Teléfono</span>
+            <input type="text" id="telefono" name="telefono" required>
+          </div>
+        </div>
 
-    <!-- Columna 2: Vehículo -->
-    <div class="form-column">
-      <h3>Datos del Vehículo</h3>
-      <div class="input-box">
-        <span class="details">Vehículo</span>
-        <input type="text" id="vehiculo" required>
+        <!-- Columna 2: Vehículo -->
+        <div class="form-column">
+          <h3>Datos del Vehículo</h3>
+          <div class="input-box">
+            <span class="details">Vehículo</span>
+            <input type="text" id="vehiculo" name="vehiculo" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Color</span>
+            <input type="text" id="color" name="color" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Kilometraje</span>
+            <input type="text" id="kilometraje" name="kilometraje" required>
+          </div>
+          <div class="input-box">
+            <span class="details">No. Serie</span>
+            <input type="text" id="noSerie" name="noSerie" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Tipo de motor</span>
+            <input type="text" id="tipoMotor" name="tipoMotor" required>
+          </div>
+        </div>
       </div>
-      <div class="input-box">
-        <span class="details">Color</span>
-        <input type="text" id="color" required>
+
+      <div class="form-section">
+        <h3>Información de Servicio</h3>
+
+        <div class="input-box">
+          <span class="details">Motivo</span>
+          <textarea id="motivo" name="motivo" required></textarea>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Servicios realizados</span>
+          <textarea id="serviciosRealizados" name="serviciosRealizados" required></textarea>
+        </div>
+
+        <div class="checkbox-section">
+          <span class="details">Otros servicios solicitados:</span>
+          <label><input type="checkbox" name="otros" value="Revisión de frenos"> Revisión de frenos</label>
+          <label><input type="checkbox" name="otros" value="Cambio de llantas"> Cambio de llantas</label>
+          <label><input type="checkbox" name="otros" value="Cambio de aceite"> Cambio de aceite</label>
+          <label><input type="checkbox" name="otros" value="Lavado"> Lavado</label>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Observaciones</span>
+          <textarea id="observaciones" name="observaciones"></textarea>
+        </div>
       </div>
-      <div class="input-box">
-        <span class="details">Kilometraje</span>
-        <input type="text" id="kilometraje" required>
+
+      <!-- Botones -->
+      <div class="button">
+        <input type="submit" value="Registrar en Google Sheets">
       </div>
-      <div class="input-box">
-        <span class="details">No. Serie</span>
-        <input type="text" id="noSerie" required>
+
+      <div class="button">
+        <input type="button" value="Generar PDF" onclick="generarPDF()">
       </div>
-      <div class="input-box">
-        <span class="details">Tipo de motor</span>
-        <input type="text" id="tipoMotor" required>
-      </div>
-    </div>
+
+      <img id="imagenCarro" src="carro.jpeg" style="display:none;">
+    </form>
   </div>
 
-  <!-- Zona general -->
-  <div class="form-section">
-    <h3>Información de Servicio</h3>
-
-    <div class="input-box">
-      <span class="details">Motivo</span>
-      <textarea id="motivo" required></textarea>
-    </div>
-
-    <div class="input-box">
-      <span class="details">Servicios realizados</span>
-      <textarea id="serviciosRealizados" required></textarea>
-    </div>
-
-    <div class="checkbox-section">
-      <span class="details">Otros servicios solicitados:</span>
-      <label><input type="checkbox" name="otros" value="Revisión de frenos"> Revisión de frenos</label>
-      <label><input type="checkbox" name="otros" value="Cambio de llantas"> Cambio de llantas</label>
-      <label><input type="checkbox" name="otros" value="Cambio de aceite"> Cambio de aceite</label>
-      <label><input type="checkbox" name="otros" value="Lavado"> Lavado</label>
-    </div>
-
-    <div class="input-box">
-      <span class="details">Observaciones</span>
-      <textarea id="observaciones"></textarea>
-    </div>
-  </div>
-
-  <!-- Botones -->
-  <div class="button">
-    <input type="submit" value="Registrar en Google Sheets">
-  <div class="button">
-    <input type="button" value="Generar PDF" onclick="generarPDF()">
-  </div>
-  <!-- En tu HTML -->
-<img id="imagenCarro" src="carro.jpeg" style="display:none;">
-
-</form>
-
-
-
-  </div>
-
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-  const { jsPDF } = window.jspdf;
-</script>
-<script src="script.js" defer></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const { jsPDF } = window.jspdf;
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
