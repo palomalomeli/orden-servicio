@@ -1,5 +1,5 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const scriptURL = 'https://script.google.com/macros/s/AKfycby9PBFmUJNziYtFgX4DPmcie6xbOxOolxV0qhZAazKBGNdqrJXlTieItlVvO99MeYPsVg/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw3PXn8wX0D96g7F2g4MnFNRjKMNRoT9PWfW9gs_8WWkVSuYAd2QwrC9IvISzHu25cTVA/exec';
 
 // Función para obtener los checkbox "otros" seleccionados
 function getCheckedOthers() {
@@ -9,33 +9,28 @@ function getCheckedOthers() {
 }
 
 function registrarDatos() {
-  const data = {
-    cliente: document.getElementById("cliente").value,
-    telefono: document.getElementById("telefono").value,
-    vehiculo: document.getElementById("vehiculo").value,
-    color: document.getElementById("color").value,
-    kilometraje: document.getElementById("kilometraje").value,
-    noSerie: document.getElementById("noSerie").value,
-    tipoMotor: document.getElementById("tipoMotor").value,
-    motivo: document.getElementById("motivo").value,
-    serviciosRealizados: document.getElementById("serviciosRealizados").value,
-    otros: getCheckedOthers(),
-    observaciones: document.getElementById("observaciones").value
-  };
+  const formData = new FormData();
+  formData.append("cliente", document.getElementById("cliente").value);
+  formData.append("telefono", document.getElementById("telefono").value);
+  formData.append("vehiculo", document.getElementById("vehiculo").value);
+  formData.append("color", document.getElementById("color").value);
+  formData.append("kilometraje", document.getElementById("kilometraje").value);
+  formData.append("noSerie", document.getElementById("noSerie").value);
+  formData.append("tipoMotor", document.getElementById("tipoMotor").value);
+  formData.append("motivo", document.getElementById("motivo").value);
+  formData.append("serviciosRealizados", document.getElementById("serviciosRealizados").value);
+  formData.append("otros", getCheckedOthers());
+  formData.append("observaciones", document.getElementById("observaciones").value);
 
-  const queryString = new URLSearchParams(data).toString();
-  const url = `${scriptURL}?${queryString}`;
-
-  fetch(url)
-    .then(res => res.text())
-    .then(response => {
-      if (response === "OK") {
-        alert("Datos enviados correctamente");
-      } else {
-        alert("Error en la respuesta del servidor: " + response);
-      }
+  fetch(scriptURL, {
+    method: "POST",
+    body: formData,
+    mode: "no-cors"
+  })
+    .then(() => {
+      alert("Datos enviados correctamente.");
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error al enviar datos:", error);
       alert("Error al enviar los datos.");
     });
