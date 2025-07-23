@@ -4,7 +4,8 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycby9PBFmUJNziYtFgX4DPm
 // Función para obtener los checkbox "otros" seleccionados
 function getCheckedOthers() {
   return Array.from(document.querySelectorAll('input[name="otros"]:checked'))
-    .map(cb => cb.value);
+    .map(cb => cb.value)
+    .join(", ");
 }
 
 function registrarDatos() {
@@ -18,33 +19,27 @@ function registrarDatos() {
     tipoMotor: document.getElementById("tipoMotor").value,
     motivo: document.getElementById("motivo").value,
     serviciosRealizados: document.getElementById("serviciosRealizados").value,
-    otros: getCheckedOthers().join(", "),
+    otros: getCheckedOthers(),
     observaciones: document.getElementById("observaciones").value
   };
 
-  // Convierte objeto data a query string URL encoded
-  const formBody = Object.keys(data).map(key => 
-    encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
-  ).join("&");
+  // Convierte el objeto a query string para GET
+  const params = new URLSearchParams(data).toString();
 
-  fetch(scriptURL, {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-    },
-    body: formBody
-  })
-  .then(res => res.json())
-  .then(response => {
-    alert("Datos enviados correctamente: " + response.result);
-  })
-  .catch(error => {
-    console.error("Error al enviar datos:", error);
-    alert("Error al enviar los datos.");
-  });
+  fetch(scriptURL + "?" + params)
+    .then(response => response.json())
+    .then(response => {
+      if(response.result === "success") {
+        alert("Datos enviados correctamente");
+      } else {
+        alert("Error: " + response.message);
+      }
+    })
+    .catch(error => {
+      console.error("Error al enviar datos:", error);
+      alert("Error al enviar los datos.");
+    });
 }
-
 // Función para generar PDF con diseño y imagen
 function generarPDF() {
   const cliente = document.getElementById("cliente").value;
