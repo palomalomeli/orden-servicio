@@ -1,5 +1,5 @@
 // URL del Apps Script (reemplaza con la tuya real)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw3PXn8wX0D96g7F2g4MnFNRjKMNRoT9PWfW9gs_8WWkVSuYAd2QwrC9IvISzHu25cTVA/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyCFY6hJWZcnW9RnuFdBLhZcY93WJMTIJytxQRT_JXgSYdy9tld1lEC2ugtAhHbfLQ7DA/exec';
 
 // Función para obtener los checkbox "otros" seleccionados
 function getCheckedOthers() {
@@ -23,17 +23,12 @@ function registrarDatos() {
   formData.append("observaciones", document.getElementById("observaciones").value);
 
   fetch(scriptURL, {
-    method: "POST",
-    body: formData,
-    mode: "no-cors"
-  })
-    .then(() => {
-      alert("Datos enviados correctamente.");
-    })
-    .catch((error) => {
-      console.error("Error al enviar datos:", error);
-      alert("Error al enviar los datos.");
-    });
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  });
+
+  alert("Datos enviados correctamente (aunque no se pueda verificar respuesta por CORS).");
 }
 // Función para generar PDF con diseño y imagen
 function generarPDF() {
