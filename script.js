@@ -1,14 +1,25 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxglq-Ieex-ysB2bky38xRnLgYQAb89yWr0RY_llskO2joQdEH139BWXVL3b3xdSAyXBA/exec';
+// Cambia esta URL por la tuya si es necesario
+const scriptURL = 'https://script.google.com/macros/s/AKfycby9PBFmUJNziYtFgX4DPmcie6xbOxOolxV0qhZAazKBGNdqrJXlTieItlVvO99MeYPsVg/exec';
 
+// Escuchar el envío del formulario
 document.getElementById('ordenForm').addEventListener('submit', e => {
   e.preventDefault();
 
   const form = e.target;
   const formData = new FormData(form);
 
+  // ✅ Concatenar manualmente los checkboxes de "otros"
+  const otrosSeleccionados = Array.from(document.querySelectorAll('input[name="otros"]:checked'))
+    .map(cb => cb.value)
+    .join(", ");
+
+  // Quitar cualquier campo "otros" duplicado
+  formData.delete("otros");
+  formData.append("otros", otrosSeleccionados);
+
   fetch(scriptURL, {
     method: 'POST',
-    body: formData
+    body: formData,
   })
     .then(response => response.text())
     .then(result => {
@@ -21,10 +32,6 @@ document.getElementById('ordenForm').addEventListener('submit', e => {
     });
 });
 
-function getCheckedOthers() {
-  return Array.from(document.querySelectorAll('input[name="otros"]:checked'))
-    .map(cb => cb.value);
-}
 
 function generarPDF() {
   const cliente = document.getElementById("cliente").value;
