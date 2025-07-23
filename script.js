@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycby9PBFmUJNziYtFgX4DPmcie6xbOxOolxV0qhZAazKBGNdqrJXlTieItlVvO99MeYPsVg/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxglq-Ieex-ysB2bky38xRnLgYQAb89yWr0RY_llskO2joQdEH139BWXVL3b3xdSAyXBA/exec';
 
 document.getElementById('ordenForm').addEventListener('submit', e => {
   e.preventDefault();
