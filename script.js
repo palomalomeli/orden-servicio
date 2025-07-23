@@ -23,16 +23,16 @@ function registrarDatos() {
     observaciones: document.getElementById("observaciones").value
   };
 
-  // Convierte el objeto a query string para GET
-  const params = new URLSearchParams(data).toString();
+  const queryString = new URLSearchParams(data).toString();
+  const url = `${scriptURL}?${queryString}`;
 
-  fetch(scriptURL + "?" + params)
-    .then(response => response.json())
+  fetch(url)
+    .then(res => res.text())
     .then(response => {
-      if(response.result === "success") {
+      if (response === "OK") {
         alert("Datos enviados correctamente");
       } else {
-        alert("Error: " + response.message);
+        alert("Error en la respuesta del servidor: " + response);
       }
     })
     .catch(error => {
